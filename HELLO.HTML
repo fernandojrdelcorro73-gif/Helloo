@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+    body {
+        background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ffc3a0, #ffdde1);
+        background-size: 400% 400%;
+        animation: gradientBG 10s ease infinite;
+        font-family: 'Segoe UI', sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .card {
+        background: white;
+        padding: 35px 40px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        width: 420px;
+        z-index: 2;
+    }
+
+    h1 {
+        color: #ff3f6c;
+    }
+
+    p {
+        font-size: 18px;
+        color: #444;
+        min-height: 70px;
+    }
+
+    button {
+        margin: 8px;
+        padding: 12px 22px;
+        font-size: 15px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .option {
+        background-color: #ff3f6c;
+        color: white;
+    }
+
+    .option:hover {
+        background-color: #ff1f4d;
+        transform: scale(1.05);
+    }
+
+    .message {
+        font-size: 22px;
+        color: #ff3f6c;
+        margin-top: 15px;
+    }
+
+    /* Floating hearts */
+    .heart {
+        position: fixed;
+        bottom: -20px;
+        font-size: 22px;
+        animation: floatUp 6s linear infinite;
+        opacity: 0.8;
+        z-index: 1;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0) scale(1); }
+        100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+    <h1>Quick Questions 😏</h1>
+    <p id="question">Hi Miss 💕 How are you today?</p>
+
+    <div id="buttons"></div>
+</div>
+
+<script>
+    let step = 0;
+
+    const quiz = [
+        {
+            question: "Hi Miss 💕 How are you today?",
+            answers: ["Good 😊", "Doing great 😌", "Better now 😏"]
+        },
+        {
+            question: "Are you free sometime soon?",
+            answers: ["Yes 😌", "For you? Always 💕", "I can make time 🥰"]
+        },
+        {
+            question: "Do you enjoy spending time with me?",
+            answers: ["Of course ❤️", "I really do 😍", "Yes, a lot 🥰"]
+        },
+        {
+            question: "Are you ready for something special?",
+            answers: ["I think so 😏", "Tell me more 👀", "Definitely 💕"]
+        },
+        {
+            question: "Will you go on a date with me on February 14, 2026? 💘",
+            answers: ["Yes 💖", "I’d love to 😍", "It’s a date 😘"]
+        }
+    ];
+
+    function render() {
+        document.getElementById("question").innerHTML = quiz[step].question;
+
+        const buttonsDiv = document.getElementById("buttons");
+        buttonsDiv.innerHTML = "";
+
+        quiz[step].answers.forEach(answer => {
+            const btn = document.createElement("button");
+            btn.className = "option";
+            btn.innerHTML = answer;
+            btn.onclick = next;
+            buttonsDiv.appendChild(btn);
+        });
+    }
+
+    function next() {
+        step++;
+
+        if (step < quiz.length) {
+            render();
+        } else {
+            document.getElementById("card").innerHTML = `
+                <h1>YAYYY 🎉❤️</h1>
+                <p class="message">
+                    You’re officially my Valentine 😘<br><br>
+                    February 14, 2026 is ours 💕
+                </p>
+            `;
+        }
+    }
+
+    render();
+
+    // Floating hearts
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 500);
+</script>
+
+</body>
+</html>
